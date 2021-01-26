@@ -1,4 +1,10 @@
 import Vue from 'vue'
-import { Button } from 'vant'
+import {
+    Button,
+    NavBar,
+    Field
+} from 'vant'
 
-Vue.use(Button)
+Vue.use(Button);
+Vue.use(NavBar);
+Vue.use(Field);
