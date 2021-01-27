@@ -4,7 +4,8 @@
       :color=color 
       :size=size 
       :type=type 
-      :round=round>
+      :round=round
+      @click="submit">
       {{text}}
       </van-button>
   </div>
@@ -40,7 +41,11 @@ name:"vbtns",
 
   computed: {},
 
-  methods: {}
+  methods: {
+      submit(){
+          this.$emit('submit')
+      }
+  }
 }
 
 </script>

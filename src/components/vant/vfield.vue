@@ -50,6 +50,7 @@ name:"vfield",
       //console.log(rule)
       if(rule.test(this.value)){
         this.$emit('log',this.value)
+        //console.log(this.value)
       }
     }
   }

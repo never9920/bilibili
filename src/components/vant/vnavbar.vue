@@ -1,6 +1,6 @@
 <template>
   <div>
-      <van-nav-bar :title=title></van-nav-bar>
+      <van-nav-bar :title=title :right-text=right @click-right="qiehuan"></van-nav-bar>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ name:"vnavbar",
   props:{
       title:{
           type:String
+      },
+      right:{
+        type:String
       }
   },
 
@@ -22,7 +25,12 @@ name:"vnavbar",
 
   computed: {},
 
-  methods: {}
+  methods: {
+    qiehuan(){
+      this.$emit('change')
+      //console.log('lll')
+    }
+  }
 }
 
 </script>

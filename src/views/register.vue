@@ -1,22 +1,25 @@
 <template>
   <div id="login">
-      <vnavbar title="登录bilibili"  right="注册" @change="change"></vnavbar>
+      <vnavbar title="注册bilibili"  right="登录" @change="change"></vnavbar>
+      <vfield label="姓名"
+      style="margin:15px 0"
+      placeholder="请输入姓名"
+      rule="^.{6,16}$"
+      @log="res=>name=res" />
       <vfield label="账号"
       placeholder="请输入账号"
       rule="^.{6,16}$"
-      style="margin:15px 0"
       @log="res=>username=res" />
       <vfield label="密码"
       placeholder="请输入密码"
       type="password"
       rule="^.{6,16}$"
-      style="margin:15px 0"
       @log="res=>password=res" />
       <vbtns 
       type="danger" 
       size="large" 
       :round="true" 
-      text="登录" 
+      text="注册" 
       style="margin:15px 10px"
       @submit="submit"></vbtns>
   </div>
@@ -30,6 +33,7 @@ export default {
 name:"register",
   data () {
     return {
+        name:'',
         username:'',
         password:'',
     };
@@ -47,9 +51,10 @@ name:"register",
     async submit(){
       //console.log('haha')
       let rule = /^.{6,16}$/
-      if(rule.test(this.username)&&rule.test(this.password)){
+      if(rule.test(this.name)&&rule.test(this.username)&&rule.test(this.password)){
         //console.log('kkk')
-        const {data:res} = await this.$http.post('/login',{
+        const {data:res} = await this.$http.post('/register',{
+          name:this.name,
           username:this.username,
           password:this.password
         })
@@ -64,7 +69,7 @@ name:"register",
       }
     },
     change(){
-    this.$router.push('/register')
+    this.$router.push('/login')
     //console.log('kk')
     }
   },
