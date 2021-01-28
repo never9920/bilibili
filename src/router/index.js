@@ -4,6 +4,8 @@ const login = () =>
     import ('../views/login')
 const register = () =>
     import ('../views/register')
+const userinfo = () =>
+    import ('../views/userinfo')
 
 Vue.use(VueRouter)
 
@@ -18,6 +20,10 @@ const routes = [{
     {
         path: '/register',
         component: register,
+    },
+    {
+        path: '/userinfo',
+        component: userinfo,
     },
 ]
 
