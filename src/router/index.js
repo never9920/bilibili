@@ -5,7 +5,7 @@ const login = () =>
 const register = () =>
     import ('../views/register')
 const userinfo = () =>
-    import ('../views/userinfo')
+    import ('../views/userinfo/userinfo')
 
 Vue.use(VueRouter)
 
