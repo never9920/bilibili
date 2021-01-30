@@ -2,7 +2,8 @@
   <div ref="userdetail" class="zhangkai">
     <div class="detail">
     <div class="left">
-      <img src="~assets/img/touxiang.jpg">
+      <img v-if=userinfo.user_img :src=userinfo.user_img>
+      <img v-else src="~assets/img/touxiang.jpg">
     </div>
     <div class="right">
       <div class="shang">
@@ -25,14 +26,15 @@
     </div>
     </div>
     <div class="introduce">
-      <h2>用户名</h2>
+      <h2>{{userinfo.username}}</h2>
       <div>
+        <p v-if="userinfo.user_desc">{{userinfo.user_desc}}</p>
         <p>这个人很神秘，什么都没有写</p>
         <p v-if="showid" class="showiid" @click="change">展开</p>
         <p v-else class="showiid" @click="change">收起</p>
       </div>
       <div class="iid">
-        uid:123456789
+        uid:{{userinfo.id}}
       </div>
     </div>
   </div>
@@ -43,8 +45,13 @@ export default {
 name:"userdetail",
   data () {
     return {
-      showid:true
+      showid:true,
+      userinfo:[]
     };
+  },
+
+  created(){
+    this.getuserinfo()
   },
 
   components: {},
@@ -52,10 +59,15 @@ name:"userdetail",
   computed: {},
 
   methods: {
+    async getuserinfo(){
+      const res = await this.$http.get('/user/' + localStorage.getItem('id'))
+      this.userinfo = res[0]
+      console.log(this.userinfo)
+    },
     change(){
       this.showid = !this.showid
       if(this.showid){
-        this.$refs.userdetail.style.height = "178px"
+        this.$refs.userdetail.style.height = "170px"
       }else{
         this.$refs.userdetail.style.height = "205px"
       }
@@ -114,6 +126,7 @@ name:"userdetail",
 .introduce h2{
   margin: 10px 0 3px 0;
   font-weight: 400;
+  border: solid 1px black;
 }
 .introduce p{
   padding: 0;
@@ -131,7 +144,7 @@ name:"userdetail",
 }
 .zhangkai{
   overflow: hidden;
-  height: 178px;
+  height: 170px;
 }
 .iid{
   background-color: #f1f1f1;

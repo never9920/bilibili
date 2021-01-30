@@ -3,7 +3,7 @@
       <navbar></navbar>
       <img src="~assets/img/bgc.png" class="image">
       <userdetail></userdetail>
-      <vtab :tabs="tabs" :current="current" @change="change"></vtab>
+      <vtab :tabs="tabs" :current="current" @change="change" class="vtab"></vtab>
   </div>
 </template>
 
@@ -40,5 +40,8 @@ name:"userinfo",
 .image{
   width: 100%;
   height: 90px;
+}
+.vtab{
+  border-top: solid 1px #f4f4f4;
 }
 </style>

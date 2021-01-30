@@ -56,6 +56,12 @@ name:"register",
         //console.log(res)
         if(res.code === 200){
           this.$toast.success(res.msg)
+          //console.log(res)
+          localStorage.setItem('id',res.id)
+          localStorage.setItem('token',res.token)
+          setTimeout(() => {
+            this.$router.push('/userinfo')
+          }, 1000);
         }else{
           this.$toast.fail(res.msg)
         }
