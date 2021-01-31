@@ -6,6 +6,8 @@ const register = () =>
     import ('../views/register')
 const userinfo = () =>
     import ('../views/userinfo/userinfo')
+const edit = () =>
+    import ('../views/edit/edit')
 
 Vue.use(VueRouter)
 
@@ -24,6 +26,10 @@ const routes = [{
     {
         path: '/userinfo',
         component: userinfo,
+    },
+    {
+        path: '/edit',
+        component: edit,
     },
 ]
 

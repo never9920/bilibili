@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="xia">
-        <div class="btn">编辑资料</div>
+        <div class="btn" @click="toedit">编辑资料</div>
       </div>
     </div>
     </div>
@@ -60,9 +60,9 @@ name:"userdetail",
 
   methods: {
     async getuserinfo(){
-      const res = await this.$http.get('/user/' + localStorage.getItem('id'))
+      const {data:res} = await this.$http.get('/user/' + localStorage.getItem('id'))
       this.userinfo = res[0]
-      console.log(this.userinfo)
+      //console.log(this.userinfo)
     },
     change(){
       this.showid = !this.showid
@@ -71,6 +71,9 @@ name:"userdetail",
       }else{
         this.$refs.userdetail.style.height = "205px"
       }
+    },
+    toedit(){
+      this.$router.push('/edit')
     }
   }
 }
@@ -126,7 +129,11 @@ name:"userdetail",
 .introduce h2{
   margin: 10px 0 3px 0;
   font-weight: 400;
-  border: solid 1px black;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  width:100%;
+  height: 28px;
 }
 .introduce p{
   padding: 0;
