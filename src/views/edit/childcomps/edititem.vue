@@ -1,15 +1,21 @@
 <template>
   <div>
-      <div  v-for="(item,i) in edititems" :key="i"  class="item">
-      <span>{{item.name}}</span>
-      <img v-if="item.type==='img'&&item.desc==='default'" src="~assets/img/touxiang.jpg">
-      <img v-else-if="item.type==='img'&&item.desc!=='default'" :src=item.desc>
-      <span v-else class="desc">{{item.desc}}</span>
+      <div  v-for="(item,i) in edititems" :key="i">
+        <div v-if="item.type==='img'" class="item">
+          <vupload class="load" size="100vw"></vupload>
+          <span>{{item.name}}</span>
+          <slot></slot>
+        </div>
+        <div v-else class="item">
+          <span>{{item.name}}</span>
+          <span class="desc">{{item.desc}}</span>
+        </div>
       </div>
   </div>
 </template>
 
 <script>
+import vupload from 'components/vant/vupload'
 export default {
 name:"edititem",
   data () {
@@ -20,10 +26,12 @@ name:"edititem",
   props:{
       edititems:{
           type:Array
-      }
+      },
   },
 
-  components: {},
+  components: {
+    vupload
+  },
 
   computed: {},
 
@@ -40,6 +48,13 @@ name:"edititem",
     display: flex;
     justify-content: space-between;
     border-bottom: solid 1px #f4f4f4;
+    position: relative;
+}
+.load{
+  position: absolute;
+  left: 0;
+  top:0;
+  opacity: 0;
 }
 .item img{
     width: 46px;

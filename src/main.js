@@ -7,6 +7,8 @@ import http from './network/axios.js'
 
 Vue.prototype.$http = http
 
+Vue.prototype.$bus = new Vue()
+
 Vue.config.productionTip = false
 
 new Vue({
