@@ -24,7 +24,7 @@ name:"vupload",
 
   methods: {
       upload(file){
-          this.$bus.$emit('load',file)
+          this.$emit('upload',file)
       }
   }
 }

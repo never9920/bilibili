@@ -10,8 +10,8 @@
           </div>
       </div>
       <div class="right">
-          <img src="~assets/img/touxiang.jpg">
-          <p class="btns">下载App</p>
+          <img :src=imgsrc>
+          <p class="btns" @click="download">下载App</p>
       </div>
   </div>
 </template>
@@ -22,6 +22,7 @@ export default {
 name:"navbar",
   data () {
     return {
+        imgsrc:require('@/assets/img/touxiang.jpg')
     };
   },
 
@@ -31,7 +32,12 @@ name:"navbar",
 
   computed: {},
 
-  methods: {}
+  methods: {
+      download(){
+          //this.$router.push('https://www.bilibili.com/') 
+          window.open('https://www.bilibili.com/','_self')
+      }
+  }
 }
 
 </script>

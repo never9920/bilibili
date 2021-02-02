@@ -29,7 +29,7 @@
       <h2>{{userinfo.username}}</h2>
       <div>
         <p v-if="userinfo.user_desc">{{userinfo.user_desc}}</p>
-        <p>这个人很神秘，什么都没有写</p>
+        <p v-else>这个人很神秘，什么都没有写</p>
         <p v-if="showid" class="showiid" @click="change">展开</p>
         <p v-else class="showiid" @click="change">收起</p>
       </div>

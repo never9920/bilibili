@@ -30,6 +30,9 @@ name:"vfield",
       },
       type:{
         type:String
+      },
+      word:{
+        type:Number,
       }
   },
 
@@ -40,6 +43,9 @@ name:"vfield",
   watch:{
     value(){
       this.test()
+    },
+    word(){
+      this.value = ''
     }
   },
 

@@ -4,11 +4,11 @@
       <vfield label="姓名"
       style="margin:15px 0"
       placeholder="请输入姓名"
-      rule="^.{6,16}$"
+      rule="^.{3,16}$"
       @log="res=>name=res" />
       <vfield label="账号"
       placeholder="请输入账号"
-      rule="^.{6,16}$"
+      rule="^.{3,16}$"
       @log="res=>username=res" />
       <vfield label="密码"
       placeholder="请输入密码"

@@ -7,7 +7,8 @@ import {
     Icon,
     Tab,
     Tabs,
-    Uploader
+    Uploader,
+    Dialog
 } from 'vant'
 
 Vue.use(Button);
@@ -17,5 +18,6 @@ Vue.use(Icon);
 Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(Uploader);
+Vue.use(Dialog);
 
 Vue.prototype.$toast = Toast
