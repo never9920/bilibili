@@ -9,7 +9,7 @@
         <div v-else class="item" @click="edit(i)">
           <span>{{item.name}}</span>
           <span v-if="item.name === '性别'&&item.desc === '1'" class="desc">男</span>
-          <span v-else-if="item.name === '性别'&&item.desc === '2'" class="desc">女</span>
+          <span v-else-if="item.name === '性别'&&item.desc === '0'" class="desc">女</span>
           <span v-else class="desc">{{item.desc}}</span>
         </div>
       </div>

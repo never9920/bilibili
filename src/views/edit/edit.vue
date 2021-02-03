@@ -1,6 +1,6 @@
 <template>
   <div class="edit">
-    <navbar></navbar>
+    <navbar :picsrc="model.user_img"></navbar>
     <div>
       <edititem :edititems="edititems" class="items" @upload="upload" @change="change">
           <img  :src="edititems[0].desc">
@@ -28,7 +28,7 @@ name:"edit",
         {name:'头像',type:'img',desc:require('@/assets/img/touxiang.jpg')},
         {name:'昵称',desc:'',rule:'^.{3,16}$'},
         {name:'UID',desc:''},
-        {name:'性别',desc:'',rule:'^男$|^女&'},
+        {name:'性别',desc:'',rule:'^男$|^女$'},
         {name:'出生日期',desc:'01-01'},
         {name:'个性签名',desc:'',rule:'^.{6,16}$'},
         ],
@@ -80,7 +80,7 @@ name:"edit",
       const res = await this.$http.get('/user/' + localStorage.getItem('id'))
       //console.log(res)
       this.model = res.data[0]
-      //console.log(this.model)
+      //console.log(typeof(this.model.gender))
       if(res.data[0].user_img){
         //console.log('true')
          this.edititems[0].desc = res.data[0].user_img
@@ -137,12 +137,13 @@ name:"edit",
           this.model.username = this.word
           this.edititems[1].desc = this.word
         }else if(this.num === 3){
+          //console.log(this.word)
           if(this.word==='男'){
             this.model.gender = 1
-            this.edititems[3].desc = 1
+            this.edititems[3].desc = '1'
           }else{
             this.model.gender = 0
-            this.edititems[3].desc = 0
+            this.edititems[3].desc = '0'
           }
         }else if(this.num === 5){
           this.model.user_desc = this.word
@@ -152,10 +153,12 @@ name:"edit",
       }
       this.isshow = false
       this.num = -1
+      this.word = ''
     },
     guan(){
       this.isshow = false
       this.num = -1
+      this.word = ''
     }
   }
 }

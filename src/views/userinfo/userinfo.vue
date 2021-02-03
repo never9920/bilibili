@@ -1,8 +1,8 @@
 <template>
   <div class="userinfo">
-      <navbar></navbar>
+      <navbar :picsrc="picsrc"></navbar>
       <img src="~assets/img/bgc.png" class="image">
-      <userdetail></userdetail>
+      <userdetail @picchange="picchange"></userdetail>
       <vtab :tabs="tabs" :current="current" @change="change" class="vtab"></vtab>
   </div>
 </template>
@@ -16,7 +16,8 @@ name:"userinfo",
   data () {
     return {
       tabs:[{title:"动态",name:"dongtai"},{title:"视屏",name:"shiping"}],
-      current:'dongtai'
+      current:'dongtai',
+      picsrc:''
     };
   },
 
@@ -31,6 +32,10 @@ name:"userinfo",
   methods: {
     change(val){
       this.current = val
+    },
+    picchange(val){
+      this.picsrc = val
+      //console.log(this.picsrc)
     }
   }
 }

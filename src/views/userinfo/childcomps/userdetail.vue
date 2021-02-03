@@ -26,7 +26,11 @@
     </div>
     </div>
     <div class="introduce">
+      <span class="pic">
       <h2>{{userinfo.username}}</h2>
+      <img src="~assets/img/male.svg" v-if="userinfo.gender === '1'">
+      <img src="~assets/img/female.svg" v-else-if="userinfo.gender === '0'">
+      </span>
       <div>
         <p v-if="userinfo.user_desc">{{userinfo.user_desc}}</p>
         <p v-else>这个人很神秘，什么都没有写</p>
@@ -46,12 +50,20 @@ name:"userdetail",
   data () {
     return {
       showid:true,
-      userinfo:[]
+      userinfo:[],
+      picsrc:''
     };
   },
 
   created(){
     this.getuserinfo()
+  },
+
+  watch:{
+    picsrc(val){
+      this.$emit('picchange',val)
+      //console.log(val)
+    }
   },
 
   components: {},
@@ -62,6 +74,7 @@ name:"userdetail",
     async getuserinfo(){
       const {data:res} = await this.$http.get('/user/' + localStorage.getItem('id'))
       this.userinfo = res[0]
+      this.picsrc = this.userinfo.user_img
       //console.log(this.userinfo)
     },
     change(){
@@ -132,8 +145,8 @@ name:"userdetail",
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
-  width:100%;
   height: 28px;
+  padding:0 10px 0 0 ;
 }
 .introduce p{
   padding: 0;
@@ -159,5 +172,11 @@ name:"userdetail",
   padding: 5px;
   border-radius: 5px;
   font-size: 13px;
+}
+.pic{
+  display: flex;
+}
+.pic img{
+  width: 16px;
 }
 </style>

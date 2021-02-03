@@ -10,7 +10,7 @@
           </div>
       </div>
       <div class="right">
-          <img :src=imgsrc>
+          <img :src=imgsrc @click="toinfo">
           <p class="btns" @click="download">下载App</p>
       </div>
   </div>
@@ -26,6 +26,18 @@ name:"navbar",
     };
   },
 
+  props:{
+      picsrc:{
+          type:String
+      }
+  },
+
+  watch:{
+      picsrc(val){
+          this.imgsrc = val
+      }
+  },
+
   components: {
       vicon
   },
@@ -36,6 +48,20 @@ name:"navbar",
       download(){
           //this.$router.push('https://www.bilibili.com/') 
           window.open('https://www.bilibili.com/','_self')
+      },
+      /*async getuser(){
+          const {data:res} = await this.$http.get('/user/' + localStorage.getItem('id'))
+          //console.log(res)
+          this.imgsrc = res[0].user_img
+          if(!this.imgsrc){
+              this.imgsrc = require('@/assets/img/touxiang.jpg')
+          }
+      },*/
+      toinfo(){
+          //console.log(this.$route)
+          if(this.$route.fullPath !=='/userinfo'){
+              this.$router.push('/userinfo')
+          }
       }
   }
 }
@@ -48,7 +74,6 @@ name:"navbar",
    display: flex;
    box-shadow: 0 1px 1px rgba(100,100,100,0.1);
    .logo{
-
        width: 100px;
        display: flex;
        justify-content: center;
@@ -89,6 +114,7 @@ name:"navbar",
             height: 24px;
             position: relative;
             top:10px;
+            border-radius: 50%;
         }
         .btns{
             background-color: pink;
