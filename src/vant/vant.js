@@ -8,7 +8,7 @@ import {
     Tab,
     Tabs,
     Uploader,
-    Dialog
+    Dialog,
 } from 'vant'
 
 Vue.use(Button);

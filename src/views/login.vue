@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-      <vnavbar title="登录bilibili"  right="注册" @change="change"></vnavbar>
+      <vnavbar title="登录bilibili"  right="注册" @change="change" @back="back" left="返回首页"></vnavbar>
       <vfield label="账号"
       placeholder="请输入账号"
       rule="^.{6,16}$"
@@ -72,6 +72,9 @@ name:"register",
     change(){
     this.$router.push('/register')
     //console.log('kk')
+    },
+    back(){
+      this.$router.push('/home')
     }
   },
 }

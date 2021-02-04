@@ -13,7 +13,7 @@ export default {
 name:"vtab",
   data () {
     return {
-        activename:"dongtai"
+        activename:""
     };
   },
 
@@ -24,7 +24,9 @@ name:"vtab",
       },
       current:{
           type:String,
-          default:"dongtai"
+      },
+      homecurrent:{
+          type:Number,
       }
   },
 
@@ -34,14 +36,19 @@ name:"vtab",
       },
       current(){
           this.activename = this.current
+      },
+      homecurrent(val){
+          this.activename = val
       }
   },
 
   components: {},
 
-  computed: {},
+  computed: {
+  },
 
-  methods: {}
+  methods: {
+  }
 }
 
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-      <vnavbar title="注册bilibili"  right="登录" @change="change"></vnavbar>
+      <vnavbar title="注册bilibili"  right="登录" @change="change" @back="back" left="返回首页"></vnavbar>
       <vfield label="姓名"
       style="margin:15px 0"
       placeholder="请输入姓名"
@@ -76,6 +76,9 @@ name:"register",
     change(){
     this.$router.push('/login')
     //console.log('kk')
+    },
+    back(){
+      this.$router.push('/home')
     }
   },
 }

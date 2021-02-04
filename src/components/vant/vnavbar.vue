@@ -1,6 +1,10 @@
 <template>
-  <div>
-      <van-nav-bar :title=title :right-text=right @click-right="qiehuan"></van-nav-bar>
+  <div class="nav">
+      <van-nav-bar :title=title :right-text=right @click-right="qiehuan" :left-text=left @click-left="onClickLeft">
+        <template #left>
+          <slot></slot>
+        </template>
+      </van-nav-bar>
   </div>
 </template>
 
@@ -18,7 +22,10 @@ name:"vnavbar",
       },
       right:{
         type:String
-      }
+      },
+      left:{
+        type:String
+      },
   },
 
   components: {},
@@ -29,10 +36,16 @@ name:"vnavbar",
     qiehuan(){
       this.$emit('change')
       //console.log('lll')
+    },
+    onClickLeft(){
+      this.$emit('back')
     }
   }
 }
 
 </script>
-<style scoped>
+<style lang="less">
+.nav .van-nav-bar__text{
+  color:#fb7a9f;
+}
 </style>

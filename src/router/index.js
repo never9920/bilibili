@@ -8,12 +8,14 @@ const userinfo = () =>
     import ('../views/userinfo/userinfo')
 const edit = () =>
     import ('../views/edit/edit')
+const home = () =>
+    import ('../views/home/home')
 
 Vue.use(VueRouter)
 
 const routes = [{
         path: '',
-        redirect: '/login'
+        redirect: '/home'
     },
     {
         path: '/login',
@@ -30,6 +32,10 @@ const routes = [{
     {
         path: '/edit',
         component: edit,
+    },
+    {
+        path: '/home',
+        component: home,
     },
 ]
 

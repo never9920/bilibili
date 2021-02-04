@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-      <div class="logo">
+      <div class="logo" @click="tohome">
           <img src="~assets/img/logo.png">
       </div>
       <div class="center">
@@ -59,8 +59,17 @@ name:"navbar",
       },*/
       toinfo(){
           //console.log(this.$route)
-          if(this.$route.fullPath !=='/userinfo'){
-              this.$router.push('/userinfo')
+          if(localStorage.getItem('id')){
+              if(this.$route.fullPath !=='/userinfo'){
+                this.$router.push('/userinfo')
+              }
+          }else{
+              this.$router.push('/login')
+          } 
+      },
+      tohome(){
+          if(this.$route.fullPath !=='/home'){
+              this.$router.push('/home')
           }
       }
   }
