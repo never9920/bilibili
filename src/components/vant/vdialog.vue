@@ -1,37 +1,43 @@
 <template>
   <div>
-      <van-dialog v-model="show" :title="title" show-cancel-button @confirm="confirm" @cancel="cancel">
-          <slot></slot>
-      </van-dialog>
+    <van-dialog
+      v-model="show"
+      :title="title"
+      show-cancel-button
+      @confirm="confirm"
+      @cancel="cancel"
+    >
+      <slot></slot>
+    </van-dialog>
   </div>
 </template>
 
 <script>
 export default {
-name:"vdialog",
-  data () {
+  name: "vdialog",
+  data() {
     return {
-        show:false
+      show: false,
     };
   },
 
-  props:{
-      isshow:{
-          type:Boolean,
-          default:false
-      },
-      title:{
-          type:String
-      }
+  props: {
+    isshow: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+    },
   },
 
-  watch:{
-      isshow(val){
-          this.show = val
-      },
-      show(){
-          this.$emit('close')
-      }
+  watch: {
+    isshow(val) {
+      this.show = val;
+    },
+    show() {
+      this.$emit("close");
+    },
   },
 
   components: {},
@@ -39,15 +45,14 @@ name:"vdialog",
   computed: {},
 
   methods: {
-      confirm(){
-          this.$emit('submit')
-      },
-      cancel(){
-          this.$emit('guan')
-      }
-  }
-}
-
+    confirm() {
+      this.$emit("submit");
+    },
+    cancel() {
+      this.$emit("guan");
+    },
+  },
+};
 </script>
 <style scoped>
 </style>

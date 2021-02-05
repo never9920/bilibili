@@ -1,67 +1,67 @@
 <template>
   <div>
-    <van-field 
-    v-model="value" 
-    :label=label 
-    :placeholder=placeholder 
-    :type=type
-    :rule=rule />
+    <van-field
+      v-model="value"
+      :label="label"
+      :placeholder="placeholder"
+      :type="type"
+      :rule="rule"
+    />
   </div>
 </template>
 
 <script>
 export default {
-name:"vfield",
-  data () {
+  name: "vfield",
+  data() {
     return {
-        value:''
+      value: "",
     };
   },
 
-  props:{
-      label:{
-        type:String
-      },
-      placeholder:{
-        type:String
-      }, 
-      rule:{
-        type:String 
-      },
-      type:{
-        type:String
-      },
-      word:{
-        type:Number,
-      }
+  props: {
+    label: {
+      type: String,
+    },
+    placeholder: {
+      type: String,
+    },
+    rule: {
+      type: String,
+    },
+    type: {
+      type: String,
+    },
+    word: {
+      type: Number,
+    },
   },
 
   components: {},
 
   computed: {},
 
-  watch:{
-    value(){
-      this.test()
+  watch: {
+    value() {
+      this.test();
     },
-    word(){
-      this.value = ''
-    }
+    word() {
+      this.value = "";
+    },
   },
 
   methods: {
-    test(){
+    test() {
       //console.log(this.rule)
-      const rule = new RegExp(this.rule)
+      const rule = new RegExp(this.rule);
       //console.log(rule)
-      if(rule.test(this.value)){
-        this.$emit('log',this.value)
+      if (rule.test(this.value)) {
+        this.$emit("log", this.value);
         //console.log(this.value)
       }
-    }
-  }
-}
-
+    },
+  },
+};
 </script>
 <style scoped>
 </style>

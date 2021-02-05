@@ -1,69 +1,67 @@
 <template>
   <div ref="userdetail" class="zhangkai">
     <div class="detail">
-    <div class="left">
-      <img v-if=userinfo.user_img :src=userinfo.user_img>
-      <img v-else src="~assets/img/touxiang.jpg">
-    </div>
-    <div class="right">
-      <div class="shang">
-        <div>
-          <div>0</div>
-          <div class="text">粉丝</div>
+      <div class="left">
+        <img v-if="userinfo.user_img" :src="userinfo.user_img" />
+        <img v-else src="~assets/img/touxiang.jpg" />
+      </div>
+      <div class="right">
+        <div class="shang">
+          <div>
+            <div>0</div>
+            <div class="text">粉丝</div>
+          </div>
+          <div class="center">
+            <div>54</div>
+            <div class="text">关注</div>
+          </div>
+          <div>
+            <div>0</div>
+            <div class="text">获赞</div>
+          </div>
         </div>
-        <div class="center">
-          <div>54</div>
-          <div class="text">关注</div>
-        </div>
-        <div>
-          <div>0</div>
-          <div class="text">获赞</div>
+        <div class="xia">
+          <div class="btn" @click="toedit">编辑资料</div>
         </div>
       </div>
-      <div class="xia">
-        <div class="btn" @click="toedit">编辑资料</div>
-      </div>
-    </div>
     </div>
     <div class="introduce">
       <span class="pic">
-      <h2>{{userinfo.username}}</h2>
-      <img src="~assets/img/male.svg" v-if="userinfo.gender === '1'">
-      <img src="~assets/img/female.svg" v-else-if="userinfo.gender === '0'">
+        <h2>{{ userinfo.username }}</h2>
+        <img src="~assets/img/male.svg" v-if="userinfo.gender === '1'" />
+        <img src="~assets/img/female.svg" v-else-if="userinfo.gender === '0'" />
       </span>
       <div>
-        <p v-if="userinfo.user_desc">{{userinfo.user_desc}}</p>
+        <p v-if="userinfo.user_desc">{{ userinfo.user_desc }}</p>
         <p v-else>这个人很神秘，什么都没有写</p>
         <p v-if="showid" class="showiid" @click="change">展开</p>
         <p v-else class="showiid" @click="change">收起</p>
       </div>
-      <div class="iid">
-        uid:{{userinfo.id}}
-      </div>
+      <div class="iid">uid:{{ userinfo.id }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-name:"userdetail",
-  data () {
+  name: "userdetail",
+  data() {
     return {
-      showid:true,
-      userinfo:[],
-      picsrc:''
+      showid: true,
+      userinfo: [],
+      picsrc: "",
     };
   },
 
-  created(){
-    this.getuserinfo()
+  created() {
+    this.getuserinfo();
   },
 
-  watch:{
-    picsrc(val){
-      this.$emit('picchange',val)
+  watch: {
+    picsrc(val) {
+      this.$emit("picchange", val);
       //console.log(val)
-    }
+    },
   },
 
   components: {},
@@ -71,112 +69,113 @@ name:"userdetail",
   computed: {},
 
   methods: {
-    async getuserinfo(){
-      const {data:res} = await this.$http.get('/user/' + localStorage.getItem('id'))
-      this.userinfo = res[0]
-      this.picsrc = this.userinfo.user_img
+    async getuserinfo() {
+      const { data: res } = await this.$http.get(
+        "/user/" + localStorage.getItem("id")
+      );
+      this.userinfo = res[0];
+      this.picsrc = this.userinfo.user_img;
       //console.log(this.userinfo)
     },
-    change(){
-      this.showid = !this.showid
-      if(this.showid){
-        this.$refs.userdetail.style.height = "170px"
-      }else{
-        this.$refs.userdetail.style.height = "205px"
+    change() {
+      this.showid = !this.showid;
+      if (this.showid) {
+        this.$refs.userdetail.style.height = "170px";
+      } else {
+        this.$refs.userdetail.style.height = "205px";
       }
     },
-    toedit(){
-      this.$router.push('/edit')
-    }
-  }
-}
-
+    toedit() {
+      this.$router.push("/edit");
+    },
+  },
+};
 </script>
 <style scoped>
-.detail{
+.detail {
   padding: 0 12px;
   display: flex;
 }
-.left img{
+.left img {
   width: 84px;
   height: 84px;
   border-radius: 50%;
 }
-.right{
-  flex:1;
+.right {
+  flex: 1;
 }
-.shang{
+.shang {
   display: flex;
   font-size: 13px;
   margin: 5px 0;
 }
-.shang div{
+.shang div {
   text-align: center;
   flex: 1;
   justify-content: center;
   align-items: center;
 }
-.xia{
- text-align: center;
- padding: 5px 5px
+.xia {
+  text-align: center;
+  padding: 5px 5px;
 }
-.btn{
+.btn {
   border: solid 2px #fb7a9f;
   margin: 5px 10px;
-  border-radius:5px;
+  border-radius: 5px;
   color: #fb7a9f;
   padding: 3px;
   justify-content: center;
   align-items: center;
 }
-.center{
+.center {
   border-left: solid 1px #ccc;
   border-right: solid 1px #ccc;
 }
-.text{
+.text {
   color: #aaa;
 }
-.introduce{
+.introduce {
   padding: 0 12px;
 }
-.introduce h2{
+.introduce h2 {
   margin: 10px 0 3px 0;
   font-weight: 400;
-  white-space: nowrap; 
-  overflow: hidden; 
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
   height: 28px;
-  padding:0 10px 0 0 ;
+  padding: 0 10px 0 0;
 }
-.introduce p{
+.introduce p {
   padding: 0;
   margin: 10px 0;
   color: #999;
 }
-.introduce div{
+.introduce div {
   display: flex;
   align-items: center;
 }
-.showiid{
+.showiid {
   flex: 1;
   text-align: right;
-  color:skyblue!important;
+  color: skyblue !important;
 }
-.zhangkai{
+.zhangkai {
   overflow: hidden;
   height: 170px;
 }
-.iid{
+.iid {
   background-color: #f1f1f1;
-  width:fit-content;
+  width: fit-content;
   padding: 5px;
   border-radius: 5px;
   font-size: 13px;
 }
-.pic{
+.pic {
   display: flex;
 }
-.pic img{
+.pic img {
   width: 16px;
 }
 </style>

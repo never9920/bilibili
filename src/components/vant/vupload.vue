@@ -1,21 +1,20 @@
 <template>
   <div>
-      <van-uploader :after-read="upload" :preview-size="size"></van-uploader>
+    <van-uploader :after-read="upload" :preview-size="size"></van-uploader>
   </div>
 </template>
 
 <script>
 export default {
-name:"vupload",
-  data () {
-    return {
-    };
+  name: "vupload",
+  data() {
+    return {};
   },
 
-  props:{
-      size:{
-          type:String
-      }
+  props: {
+    size: {
+      type: String,
+    },
   },
 
   components: {},
@@ -23,12 +22,11 @@ name:"vupload",
   computed: {},
 
   methods: {
-      upload(file){
-          this.$emit('upload',file)
-      }
-  }
-}
-
+    upload(file) {
+      this.$emit("upload", file);
+    },
+  },
+};
 </script>
 <style scoped>
 </style>
