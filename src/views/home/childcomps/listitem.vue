@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, i) in hometab" :key="i" class="detail">
+    <div v-for="(item, i) in hometab" :key="i" class="detail" @click="tovideo(item)">
       <div class="itemimg">
         <img v-if="item.img" :src="item.img" class="detailimg" />
         <span class="video">
@@ -42,7 +42,11 @@ export default {
 
   computed: {},
 
-  methods: {},
+  methods: {
+    tovideo(val){
+      this.$router.push('/video/' + val.id)
+    }
+  },
 };
 </script>
 <style scoped>
@@ -55,8 +59,9 @@ export default {
   height: 95px;
   margin: 5px 0;
   border-radius: 5px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85), transparent);
+  background: linear-gradient(180deg,white 70% ,rgba(0, 0, 0, 0.85));
 }
+
 .itemimg {
   position: relative;
 }

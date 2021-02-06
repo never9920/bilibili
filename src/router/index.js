@@ -10,6 +10,8 @@ const edit = () =>
     import ('../views/edit/edit')
 const home = () =>
     import ('../views/home/home')
+const video = () =>
+    import ('../views/video/video')
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,10 @@ const routes = [{
     {
         path: '/home',
         component: home,
+    },
+    {
+        path: '/video/:id',
+        component: video,
     },
 ]
 
