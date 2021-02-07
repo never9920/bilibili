@@ -25,7 +25,7 @@
           <div @click="show2 = !show2">
             <img v-if="show2" src="~assets/img/xia.svg" />
             <img v-else src="~assets/img/xiapink.svg" />
-            <span>下载</span>
+            <span>缓存</span>
           </div>
           <div @click="show3 = !show3">
             <img v-if="show3" src="~assets/img/fen.svg" />
@@ -34,12 +34,18 @@
           </div>
         </div>
       </div>
+      <listitem :hometab="comment" class="list"></listitem>
+      <comment :picsrc="imgsrc"></comment>
+      <commentitem></commentitem>
     </div>
   </div>
 </template>
 
 <script>
 import navbar from "components/content/navbar";
+import listitem from "../home/childcomps/listitem";
+import comment from "./childcomps/comment.vue";
+import commentitem from "./childcomps/commentitem.vue";
 export default {
   name: "home",
   data() {
@@ -49,18 +55,30 @@ export default {
       show1: true,
       show2: true,
       show3: true,
+      comment: [],
     };
   },
 
   components: {
     navbar,
+    listitem,
+    comment,
+    commentitem,
   },
 
   created() {
-    this.getuser(), this.getvideo();
+    this.getuser(), this.getvideo(), this.getcomment();
   },
 
   computed: {},
+
+  watch: {
+    $route() {
+      //console.log('bianhua')
+      this.getvideo(), this.getcomment();
+      scrollTo(0, 0);
+    },
+  },
 
   methods: {
     async getuser() {
@@ -86,6 +104,11 @@ export default {
       this.model = res[0];
       //console.log(this.model)
     },
+    async getcomment() {
+      const { data: res } = await this.$http.get("/commend");
+      this.comment = res;
+      //console.log(res)
+    },
   },
 };
 </script>
@@ -107,7 +130,7 @@ export default {
   font-size: 12px;
 }
 .detailfo {
-  padding: 10px;
+  padding: 15px 10px;
 }
 .second {
   color: #aaa;
@@ -121,10 +144,22 @@ export default {
 }
 .icons {
   display: flex;
-  justify-content: space-around;
+  font-size: 12px;
+}
+.icons div {
+  display: flex;
+  margin-right: 15px;
+  align-items: center;
+  justify-items: center;
 }
 .icons img {
-  height: 16px;
-  width: 16px;
+  height: 20px;
+  width: 20px;
+  margin-right: 3px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 </style>
