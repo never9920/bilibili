@@ -1,5 +1,5 @@
 <template>
-  <div class="comitem">
+  <div>
     <div class="item">
       <div class="itemimg">
         <img src="~assets/img/touxiang.jpg" alt="" />
@@ -14,7 +14,6 @@
           接口:http://112.74.99.5:3000/web/api
           源码:https://github.com/githubchx12380/bilibili
         </div>
-        <secondcom></secondcom>
       </div>
     </div>
     <div class="item">
@@ -37,64 +36,30 @@
 </template>
 
 <script>
-import secondcom from "./secondcom";
 export default {
-  name: "commentitem",
+  name: "secondcom",
   data() {
     return {};
   },
 
-  created() {
-    this.getcomitem();
-  },
-
-  watch: {
-    $route() {
-      this.getcomitem();
-    },
-  },
-
-  components: {
-    secondcom,
-  },
+  components: {},
 
   computed: {},
 
-  methods: {
-    async getcomitem() {
-      console.log(this.$route.params.id);
-      const { data: res } = await this.$http.get(
-        "/comment/" + this.$route.params.id
-      );
-      //console.log(res);
-    },
-    fen(temp) {
-      let arr1 = [];
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].parent_id == temp) {
-          arr1.push(arr[i]);
-          arr[i].child = fen(arr[i].comment_id);
-        }
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 <style scoped>
-.comitem {
-  padding: 0 20px;
+.itemimg img {
+  width: 35px;
+  height: 35px;
 }
 .item {
   display: flex;
-  border-bottom: 1px solid #e7e7e7;
   padding: 10px 0;
 }
 .itemimg {
   margin-right: 10px;
-}
-.itemimg img {
-  width: 35px;
-  height: 35px;
 }
 .iteminfo p {
   display: flex;
