@@ -35,8 +35,18 @@
         </div>
       </div>
       <listitem :hometab="comment" class="list"></listitem>
-      <comment :picsrc="imgsrc"></comment>
-      <commentitem></commentitem>
+      <comment
+        :picsrc="imgsrc"
+        :numlength="numlength"
+        @posttext="posttext"
+        :status="status"
+        ref="comcom"
+      ></comment>
+      <commentitem
+        @getnumber="getnumber"
+        :status="status"
+        @userpub="userpub"
+      ></commentitem>
     </div>
   </div>
 </template>
@@ -56,6 +66,14 @@ export default {
       show2: true,
       show3: true,
       comment: [],
+      numlength: 0,
+      param: {
+        comment_content: "",
+        comment_date: "",
+        parent_id: null,
+        article_id: null,
+      },
+      status: 0,
     };
   },
 
@@ -108,6 +126,50 @@ export default {
       const { data: res } = await this.$http.get("/commend");
       this.comment = res;
       //console.log(res)
+    },
+    getnumber(val) {
+      this.numlength = val;
+    },
+    async posttext(val) {
+      this.param.comment_content = val;
+      let data = new Date();
+      let m = data.getMonth() + 1;
+      let d = data.getDate();
+      if (m < 10) {
+        m = "0" + m;
+      }
+      if (d < 10) {
+        d = "0" + d;
+      }
+      let str = `${m}-${d}`;
+      this.param.comment_date = str;
+      this.param.article_id = this.$route.params.id;
+      //console.log(this.param)
+      const res = await this.$http.post(
+        "/comment_post/" + localStorage.getItem("id"),
+        this.param
+      );
+      //console.log(res.status)
+      if (res.status === 200) {
+        this.$toast.success("发表成功");
+        this.status = this.status + 1;
+        this.param.parent_id = "";
+      } else {
+        this.$toast.fail("发表失败");
+      }
+    },
+    userpub(val) {
+      this.param.parent_id = val.comment_id;
+      //console.log(val)
+      let username = "";
+      if (val.userinfo.name) {
+        username = val.userinfo.name;
+        //console.log(this.username);
+      } else {
+        username = "";
+      }
+      this.$refs.comcom.$refs.cominput.placeholder = "回复" + username;
+      this.$refs.comcom.inputfoc();
     },
   },
 };

@@ -1,36 +1,31 @@
 <template>
   <div>
-    <div class="item">
+    <div class="item" v-for="(item, i) in child" :key="i">
       <div class="itemimg">
-        <img src="~assets/img/touxiang.jpg" alt="" />
-      </div>
-      <div class="iteminfo">
+        <img
+          v-if="item.userinfo && item.userinfo.user_img"
+          :src="item.userinfo.user_img"
+          alt=""
+        />
+        <img v-else src="~assets/img/touxiang.jpg" alt="" />
         <p>
-          <span>xx</span>
-          <span>04-17</span>
+          <span v-if="item.userinfo && item.userinfo.name">{{
+            item.userinfo.name
+          }}</span>
+          <span v-else>此用户未命名</span>
+          <span v-if="item.comment_date">{{ item.comment_date }}</span>
+          <span v-else>04-17</span>
         </p>
-        <div>
-          接口已开放公网供大家使用,项目持续更新,有任何问题或者想实现的功能都可以在下方留言:
-          接口:http://112.74.99.5:3000/web/api
-          源码:https://github.com/githubchx12380/bilibili
-        </div>
       </div>
-    </div>
-    <div class="item">
-      <div class="itemimg">
-        <img src="~assets/img/touxiang.jpg" alt="" />
+      <div class="text" v-if="temp">
+        回复 <span style="color: #475ef0">{{ item.parent_user_info.name }}</span
+        >：{{ item.comment_content }}
+        <span class="publish" @click="userpub(item)">回复</span>
       </div>
-      <div class="iteminfo">
-        <p>
-          <span>xx</span>
-          <span>04-17</span>
-        </p>
-        <div>
-          接口已开放公网供大家使用,项目持续更新,有任何问题或者想实现的功能都可以在下方留言:
-          接口:http://112.74.99.5:3000/web/api
-          源码:https://github.com/githubchx12380/bilibili
-        </div>
+      <div class="text" v-else>{{ item.comment_content }}
+        <span class="publish" @click="userpub(item)">回复</span>
       </div>
+      <secondcom :child="item.child" :temp="true" @userpub="userpub"></secondcom>
     </div>
   </div>
 </template>
@@ -42,37 +37,53 @@ export default {
     return {};
   },
 
+  props: {
+    child: {
+      type: Array,
+    },
+    temp: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   components: {},
 
   computed: {},
 
-  methods: {},
+  methods: {
+    userpub(id){
+      this.$emit('userpub',id)
+    }
+  },
 };
 </script>
 <style scoped>
 .itemimg img {
   width: 35px;
   height: 35px;
-}
-.item {
-  display: flex;
-  padding: 10px 0;
+  border-radius: 50%;
 }
 .itemimg {
-  margin-right: 10px;
+  display: flex;
 }
-.iteminfo p {
+.itemimg p {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   justify-items: center;
   font-size: 13px;
   color: #555;
   margin-bottom: 5px;
+  margin-left: 10px;
 }
-.iteminfo {
-  flex: 1;
-}
-.iteminfo div {
+.text {
   font-size: 13px;
+  margin: 10px 0;
+}
+.publish{
+  position: absolute;
+  right: 20px;
+  color: #475ef0;
 }
 </style>
