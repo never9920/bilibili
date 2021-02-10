@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class={btns:btns}>
     <van-tabs
       v-model="activename"
       title-active-color="#fb7a9f"
@@ -39,6 +39,10 @@ export default {
     homecurrent: {
       type: Number,
     },
+    btns:{
+        type:Boolean,
+        default:false
+    }
   },
 
   watch: {
@@ -60,5 +64,11 @@ export default {
   methods: {},
 };
 </script>
-<style scoped>
+<style lang="less">
+.btns .van-sticky{
+  width:calc(100% - 30px);
+}
+.btns .van-sticky--fixed{
+  width: 100%;
+}
 </style>

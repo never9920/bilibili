@@ -71,7 +71,7 @@ export default {
   methods: {
     async getuserinfo() {
       const { data: res } = await this.$http.get(
-        "/user/" + localStorage.getItem("id")
+        "/user/" + sessionStorage.getItem("id")
       );
       this.userinfo = res[0];
       this.picsrc = this.userinfo.user_img;

@@ -1,22 +1,25 @@
 <template>
   <div>
     <navbar :picsrc="imgsrc"></navbar>
-    <vtab :tabs="hometab" :homecurrent="current" @change="change">
-      <vlist
-        @load="loadmore"
-        :finished="hometab[current].finished"
-        :care="hometab[current].loading"
-        v-if="show"
-        @changecare="changecare"
-      >
-        <listitem
+    <div class="seticon">
+      <vicon name="setting-o" class="icons" @click.native="tocate"></vicon>
+      <vtab :tabs="hometab" :homecurrent="current" @change="change" :btns="true">
+        <vlist
+          @load="loadmore"
+          :finished="hometab[current].finished"
+          :care="hometab[current].loading"
           v-if="show"
-          :hometab="hometab[current].list"
-          :current="current"
-          class="list"
-        ></listitem>
-      </vlist>
-    </vtab>
+          @changecare="changecare"
+        >
+          <listitem
+            v-if="show"
+            :hometab="hometab[current].list"
+            :current="current"
+            class="list"
+          ></listitem>
+        </vlist>
+      </vtab>
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ import navbar from "components/content/navbar";
 import vtab from "components/vant/vtab.vue";
 import listitem from "./childcomps/listitem";
 import vlist from "../../components/vant/vlist";
+import vicon from "../../components/vant/vicon.vue";
 export default {
   name: "home",
   data() {
@@ -41,10 +45,15 @@ export default {
     vtab,
     listitem,
     vlist,
+    vicon,
   },
 
   created() {
     this.getuser(), this.gethome();
+  },
+
+  activated(){
+    this.gethome()
   },
 
   computed: {
@@ -55,9 +64,9 @@ export default {
 
   methods: {
     async getuser() {
-      if (localStorage.getItem("id")) {
+      if (sessionStorage.getItem("id")) {
         const { data: res } = await this.$http.get(
-          "/user/" + localStorage.getItem("id")
+          "/user/" + sessionStorage.getItem("id")
         );
         //console.log(res)
         this.imgsrc = res[0].user_img;
@@ -71,10 +80,16 @@ export default {
       }
     },
     async gethome() {
-      const { data: res } = await this.$http.get("/category");
-      //console.log(res)
-      //console.log(typeof(this.current))
-      this.changedata(res);
+      if (sessionStorage.getItem("newcate") && sessionStorage.getItem("delcate")) {
+        const newcate = JSON.parse(sessionStorage.getItem("newcate"));
+        this.current = 0
+        this.changedata(newcate)
+      } else {
+        const { data: res } = await this.$http.get("/category");
+        //console.log(res)
+        this.changedata(res);
+        //console.log(typeof(this.current))
+      }
     },
     changedata(val) {
       const category = val.map((item, index) => {
@@ -121,6 +136,10 @@ export default {
       //console.log(val);
       this.hometab[this.current].loading = val;
     },
+    tocate() {
+      //console.log('kkk')
+      this.$router.push("/category");
+    },
   },
 };
 </script>
@@ -129,5 +148,19 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+.seticon {
+  position: relative;
+}
+.icons {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background-color: #fff;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  width: 30px;
+  justify-content: center;
 }
 </style>

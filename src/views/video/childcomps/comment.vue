@@ -52,7 +52,7 @@ export default {
 
   methods: {
     checkuser() {
-      if (!localStorage.getItem("id") && !localStorage.getItem("token")) {
+      if (!sessionStorage.getItem("id") && !sessionStorage.getItem("token")) {
         this.$toast.fail("请先登录");
         this.$router.push("/login");
         return;

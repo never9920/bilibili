@@ -18,8 +18,12 @@
           <span v-if="item.comment_date">{{ item.comment_date }}</span>
           <span v-else>04-17</span>
         </p>
-        <div class="text">
+        <div class="text" v-if="item.comment_content">
           {{ item.comment_content }}
+          <span class="publish" @click="userpub(item)">回复</span>
+        </div>
+        <div class="text" v-else>
+           此用户什么都没说 
           <span class="publish" @click="userpub(item)">回复</span>
         </div>
         <secondcom :child="item.child" @userpub="userpub"></secondcom>

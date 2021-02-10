@@ -12,6 +12,8 @@ const home = () =>
     import ('../views/home/home')
 const video = () =>
     import ('../views/video/video')
+const category = () =>
+    import ('../views/category')
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,10 @@ const routes = [{
         path: '/video/:id',
         component: video,
     },
+    {
+        path: '/category',
+        component: category,
+    },
 ]
 
 const router = new VueRouter({
@@ -58,7 +64,7 @@ router.beforeEach((to, from, next) => {
     //to 将要访问的路径
     //from 代表从哪个路径跳转来的
     //next()表示放行 next('./login')表示强制返回login
-    const manager = localStorage.getItem('token')
+    const manager = sessionStorage.getItem('token')
         //console.log(manager)
     if (to.path === '/userinfo') {
         if (!manager) {

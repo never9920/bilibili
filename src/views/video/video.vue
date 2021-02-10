@@ -17,20 +17,26 @@
           <span class="second">{{ model.date }}</span>
         </div>
         <div class="icons">
-          <div @click="show1 = !show1">
+          <div @click="postcoll">
             <img v-if="show1" src="~assets/img/shou.svg" />
             <img v-else src="~assets/img/shoupink.svg" />
             <span>收藏</span>
           </div>
-          <div @click="show2 = !show2">
-            <img v-if="show2" src="~assets/img/xia.svg" />
-            <img v-else src="~assets/img/xiapink.svg" />
+          <div @click="tobi">
+            <img src="~assets/img/xia.svg" />
             <span>缓存</span>
           </div>
-          <div @click="show3 = !show3">
-            <img v-if="show3" src="~assets/img/fen.svg" />
-            <img v-else src="~assets/img/fenpink.svg" />
+          <div @click="tobi">
+            <img src="~assets/img/fen.svg" />
             <span>分享</span>
+          </div>
+          <div class="cares" v-if="show2" @click="postfol">
+            <img src="~assets/img/jia.svg" />
+            <span>关注</span>
+          </div>
+          <div class="caresless" v-else @click="postfol">
+            <img src="~assets/img/yi.svg" />
+            <span>取消关注</span>
           </div>
         </div>
       </div>
@@ -63,8 +69,6 @@ export default {
       imgsrc: "",
       model: [],
       show1: true,
-      show2: true,
-      show3: true,
       comment: [],
       numlength: 0,
       param: {
@@ -74,6 +78,7 @@ export default {
         article_id: null,
       },
       status: 0,
+      show2: true,
     };
   },
 
@@ -85,7 +90,7 @@ export default {
   },
 
   created() {
-    this.getuser(), this.getvideo(), this.getcomment();
+    this.getuser(), this.getvideo(), this.getcomment(), this.collectioninit();
   },
 
   computed: {},
@@ -93,16 +98,16 @@ export default {
   watch: {
     $route() {
       //console.log('bianhua')
-      this.getvideo(), this.getcomment();
+      this.getvideo(), this.getcomment(), this.collectioninit();
       scrollTo(0, 0);
     },
   },
 
   methods: {
     async getuser() {
-      if (localStorage.getItem("id")) {
+      if (sessionStorage.getItem("id")) {
         const { data: res } = await this.$http.get(
-          "/user/" + localStorage.getItem("id")
+          "/user/" + sessionStorage.getItem("id")
         );
         //console.log(res)
         this.imgsrc = res[0].user_img;
@@ -121,6 +126,7 @@ export default {
       );
       this.model = res[0];
       //console.log(this.model)
+      this.folinit();
     },
     async getcomment() {
       const { data: res } = await this.$http.get("/commend");
@@ -131,6 +137,10 @@ export default {
       this.numlength = val;
     },
     async posttext(val) {
+      if (!val) {
+        this.$toast.fail("请说点什么吧");
+        return;
+      }
       this.param.comment_content = val;
       let data = new Date();
       let m = data.getMonth() + 1;
@@ -146,7 +156,7 @@ export default {
       this.param.article_id = this.$route.params.id;
       //console.log(this.param)
       const res = await this.$http.post(
-        "/comment_post/" + localStorage.getItem("id"),
+        "/comment_post/" + sessionStorage.getItem("id"),
         this.param
       );
       //console.log(res.status)
@@ -154,6 +164,7 @@ export default {
         this.$toast.success("发表成功");
         this.status = this.status + 1;
         this.param.parent_id = "";
+        this.$refs.comcom.$refs.cominput.placeholder = "说点什么吧";
       } else {
         this.$toast.fail("发表失败");
       }
@@ -171,6 +182,79 @@ export default {
       this.$refs.comcom.$refs.cominput.placeholder = "回复" + username;
       this.$refs.comcom.inputfoc();
     },
+    async postcoll() {
+      if (sessionStorage.getItem("id") && sessionStorage.getItem("token")) {
+        //console.log("kkk+++++++");
+        const { data: res } = await this.$http.post(
+          "/collection/" + sessionStorage.getItem("id"),
+          { article_id: this.$route.params.id }
+        );
+        //console.log(res)
+        if (res.code === 200) {
+          this.$toast.success(res.msg);
+          this.show1 = !this.show1;
+        } else {
+          this.$toast.fail("收藏失败");
+        }
+      } else {
+        this.$toast.fail("请先登录");
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 500);
+      }
+    },
+    async collectioninit() {
+      if (sessionStorage.getItem("id") && sessionStorage.getItem("token")) {
+        const { data: res } = await this.$http.get(
+          "/collection/" + sessionStorage.getItem("id"),
+          {
+            params: {
+              article_id: this.$route.params.id,
+            },
+          }
+        );
+        //console.log(res)
+        this.show1 = !res.success;
+      }
+    },
+    async postfol() {
+      if (sessionStorage.getItem("id") && sessionStorage.getItem("token")) {
+        //console.log("kkk+++++++");
+        const { data: res } = await this.$http.post(
+          "/sub_scription/" + sessionStorage.getItem("id"),
+          { sub_id: this.model.userid }
+        );
+        //console.log(res)
+        if (res.code === 200) {
+          this.$toast.success(res.msg);
+          this.show2 = !this.show2;
+        } else {
+          this.$toast.fail("关注失败");
+        }
+      } else {
+        this.$toast.fail("请先登录");
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 500);
+      }
+    },
+    async folinit() {
+      if (sessionStorage.getItem("id") && sessionStorage.getItem("token")) {
+        const { data: res } = await this.$http.get(
+          "/sub_scription/" + sessionStorage.getItem("id"),
+          {
+            params: {
+              sub_id: this.model.userid,
+            },
+          }
+        );
+        //console.log(res)
+        this.show2 = !res.success;
+      }
+    },
+    tobi() {
+      window.open("https://www.bilibili.com/", "_self");
+    },
   },
 };
 </script>
@@ -186,27 +270,35 @@ export default {
 }
 .first {
   padding: 5px 10px;
+  margin-right: 10px;
   color: #fb7299;
   background-color: #f4f4f4;
   border-radius: 10px;
   font-size: 12px;
 }
 .detailfo {
-  padding: 15px 10px;
+  padding: 15px 10px 15px 3px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 .second {
   color: #aaa;
   font-size: 12px;
-  padding: 0 10px;
+  flex: 1;
 }
 .third {
   color: black;
   font-size: 14px;
   padding-right: 10px;
+  height: 20px;
+  display: flex;
+  align-items: center;
 }
 .icons {
   display: flex;
   font-size: 12px;
+  height: 30px;
 }
 .icons div {
   display: flex;
@@ -223,5 +315,30 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+.cares {
+  position: absolute;
+  border: solid 1px #fb7299;
+  right: 10px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  color: #fb7299;
+}
+.cares img {
+  height: 12px;
+  width: 12px;
+}
+.caresless {
+  position: absolute;
+  border: solid 1px #aaa;
+  right: 10px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  color: white;
+  background-color: #aaa;
+}
+.caresless img {
+  height: 12px;
+  width: 12px;
 }
 </style>

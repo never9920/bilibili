@@ -9,7 +9,8 @@ import {
     Tabs,
     Uploader,
     Dialog,
-    List
+    List,
+    Divider
 } from 'vant'
 
 Vue.use(Button);
@@ -21,5 +22,6 @@ Vue.use(Tabs);
 Vue.use(Uploader);
 Vue.use(Dialog);
 Vue.use(List);
+Vue.use(Divider);
 
 Vue.prototype.$toast = Toast

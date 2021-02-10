@@ -50,7 +50,7 @@ export default {
       window.open("https://www.bilibili.com/", "_self");
     },
     /*async getuser(){
-          const {data:res} = await this.$http.get('/user/' + localStorage.getItem('id'))
+          const {data:res} = await this.$http.get('/user/' + sessionStorage.getItem('id'))
           //console.log(res)
           this.imgsrc = res[0].user_img
           if(!this.imgsrc){
@@ -59,7 +59,7 @@ export default {
       },*/
     toinfo() {
       //console.log(this.$route)
-      if (localStorage.getItem("id")) {
+      if (sessionStorage.getItem("id")) {
         if (this.$route.fullPath !== "/userinfo") {
           this.$router.push("/userinfo");
         }

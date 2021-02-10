@@ -82,11 +82,11 @@ export default {
       this.$router.back();
     },
     tuichu() {
-      localStorage.clear();
+      sessionStorage.clear();
       this.$router.push("/login");
     },
     async getedit() {
-      const res = await this.$http.get("/user/" + localStorage.getItem("id"));
+      const res = await this.$http.get("/user/" + sessionStorage.getItem("id"));
       //console.log(res)
       this.model = res.data[0];
       //console.log(typeof(this.model.gender))
@@ -118,7 +118,7 @@ export default {
     },
     async update() {
       const res = await this.$http.post(
-        "/update/" + localStorage.getItem("id"),
+        "/update/" + sessionStorage.getItem("id"),
         this.model
       );
       //console.log(res)
