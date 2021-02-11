@@ -9,9 +9,11 @@
         />
         <img v-else src="~assets/img/touxiang.jpg" alt="" />
         <p>
-          <span v-if="item.userinfo && item.userinfo.name">{{
+          <span v-if="item.userinfo && item.userinfo.name" class="name">{{
             item.userinfo.name
-          }}</span>
+          }}
+          <img v-if="reid === item.user_id" src="~assets/img/up.svg">
+          </span>
           <span v-else>此用户未命名</span>
           <span v-if="item.comment_date">{{ item.comment_date }}</span>
           <span v-else>04-17</span>
@@ -25,7 +27,7 @@
       <div class="text" v-else>{{ item.comment_content }}
         <span class="publish" @click="userpub(item)">回复</span>
       </div>
-      <secondcom :child="item.child" :temp="true" @userpub="userpub"></secondcom>
+      <secondcom :child="item.child" :temp="true" @userpub="userpub" :reid="reid"></secondcom>
     </div>
   </div>
 </template>
@@ -45,6 +47,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    reid:{
+      type:Number
+    }
   },
 
   components: {},
@@ -80,10 +85,18 @@ export default {
 .text {
   font-size: 13px;
   margin: 10px 0;
+  display: flex;
 }
 .publish{
-  position: absolute;
-  right: 20px;
   color: #475ef0;
+   margin-left:auto
+}
+.name img{
+  height: 16px;
+  width: 16px;
+  margin-left: 5px;
+}
+.name{
+  display: flex;
 }
 </style>

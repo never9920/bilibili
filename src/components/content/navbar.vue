@@ -4,7 +4,7 @@
       <img src="~assets/img/logo.png" />
     </div>
     <div class="center">
-      <div>
+      <div @click="tosearch">
         <vicon name="search" class="icon" size="16px"></vicon>
         <div>请输入需要搜索的内容</div>
       </div>
@@ -71,6 +71,9 @@ export default {
       if (this.$route.fullPath !== "/home") {
         this.$router.push("/home");
       }
+    },
+    tosearch() {
+      this.$router.push("/search");
     },
   },
 };

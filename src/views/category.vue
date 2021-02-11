@@ -84,7 +84,10 @@ export default {
       }
     },
     async gethome() {
-      if (sessionStorage.getItem("newcate") && sessionStorage.getItem("delcate")) {
+      if (
+        sessionStorage.getItem("newcate") &&
+        sessionStorage.getItem("delcate")
+      ) {
         this.newcate = JSON.parse(sessionStorage.getItem("newcate"));
         this.delcate = JSON.parse(sessionStorage.getItem("delcate"));
       } else {
@@ -96,8 +99,13 @@ export default {
     },
     delitem(i) {
       //console.log(i)
-      this.delcate.push(this.newcate[i]);
-      this.newcate.splice(i, 1);
+      //console.log(this.newcate.length)
+      if (this.newcate.length < 2) {
+        this.$toast.fail("请至少保留一个栏目");
+      } else {
+        this.delcate.push(this.newcate[i]);
+        this.newcate.splice(i, 1);
+      }
     },
     additem(i) {
       this.newcate.push(this.delcate[i]);

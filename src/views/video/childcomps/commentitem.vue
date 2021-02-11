@@ -11,9 +11,11 @@
       </div>
       <div class="iteminfo">
         <p>
-          <span v-if="item.userinfo && item.userinfo.name">{{
+          <span v-if="item.userinfo && item.userinfo.name" class="name">{{
             item.userinfo.name
-          }}</span>
+          }}
+          <img v-if="reid === item.user_id" src="~assets/img/up.svg">
+          </span>
           <span v-else>此用户未命名</span>
           <span v-if="item.comment_date">{{ item.comment_date }}</span>
           <span v-else>04-17</span>
@@ -26,7 +28,9 @@
            此用户什么都没说 
           <span class="publish" @click="userpub(item)">回复</span>
         </div>
-        <secondcom :child="item.child" @userpub="userpub"></secondcom>
+        <div v-if="item.child.length!==0">
+        <secondcom :child="item.child" @userpub="userpub" class="bgc" :reid="reid"></secondcom>
+      </div>
       </div>
     </div>
   </div>
@@ -42,7 +46,14 @@ export default {
     };
   },
 
-  props:['status'],
+  props:{
+    status:{
+      type:Number
+    },
+    reid:{
+      type:Number
+    }
+  },
 
   created() {
     this.getcomitem();
@@ -54,11 +65,11 @@ export default {
     },
     status(){
       this.getcomitem()
-    }
+    },
   },
 
   components: {
-    secondcom,
+    secondcom
   },
 
   computed: {},
@@ -129,5 +140,20 @@ export default {
   position: absolute;
   right: 20px;
   color: #475ef0;
+}
+.bgc{
+  background-color: rgb(221, 221, 221);
+  border-radius: 10px;
+  max-height: 145px;
+  padding: 5px 0;
+  overflow: scroll;
+}
+.iteminfo img{
+  height: 16px;
+  width: 16px;
+  margin-left: 5px;
+}
+.name{
+  display: flex;
 }
 </style>

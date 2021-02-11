@@ -3,7 +3,11 @@
     <navbar :picsrc="imgsrc"></navbar>
     <div>
       <div class="video">
-        <video :src="model.content" controls="controls"></video>
+        <video
+          :src="model.content"
+          controls="controls"
+          :onerror="changevideo"
+        ></video>
       </div>
       <div class="detailinfo">
         <div v-if="model.category" class="detailin">
@@ -11,7 +15,8 @@
           <span>{{ model.name }}</span>
         </div>
         <div v-if="model.userinfo" class="detailfo">
-          <span class="third">{{ model.userinfo.name }}</span>
+          <img src="~assets/img/up.svg" />
+          <span class="third" @click="tovis(model.userid)">{{ model.userinfo.name }}</span>
           <span class="second">168万次播放</span>
           <span class="second">6688弹幕</span>
           <span class="second">{{ model.date }}</span>
@@ -49,9 +54,11 @@
         ref="comcom"
       ></comment>
       <commentitem
+        v-if="model.userid"
         @getnumber="getnumber"
         :status="status"
         @userpub="userpub"
+        :reid="model.userid"
       ></commentitem>
     </div>
   </div>
@@ -79,6 +86,7 @@ export default {
       },
       status: 0,
       show2: true,
+      changevideo: 'this.src="' + require("@/assets/img/lego.mp4") + '"',
     };
   },
 
@@ -125,7 +133,7 @@ export default {
         "/article/" + this.$route.params.id
       );
       this.model = res[0];
-      //console.log(this.model)
+      //console.log(this.model);
       this.folinit();
     },
     async getcomment() {
@@ -255,6 +263,15 @@ export default {
     tobi() {
       window.open("https://www.bilibili.com/", "_self");
     },
+    tovis(val){
+      //console.log(val)
+      sessionStorage.setItem('img',this.model.userinfo.user_img)
+      sessionStorage.setItem('gender',this.model.userinfo.gender)
+      sessionStorage.setItem('visid',this.model.userinfo.id)
+      sessionStorage.setItem('name',this.model.userinfo.name)
+      sessionStorage.setItem('desc',this.model.userinfo.user_desc)
+      this.$router.push('/visitor/' + val)
+    }
   },
 };
 </script>
@@ -281,6 +298,11 @@ export default {
   display: flex;
   justify-items: center;
   align-items: center;
+}
+.detailfo img {
+  width: 16px;
+  height: 16px;
+  padding-right: 5px;
 }
 .second {
   color: #aaa;

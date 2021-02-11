@@ -53,7 +53,7 @@ export default {
   },
 
   activated(){
-    this.gethome()
+    this.getuser(),this.gethome()
   },
 
   computed: {

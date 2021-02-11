@@ -2,13 +2,13 @@
   <div>
     <div v-for="(item, i) in hometab" :key="i" class="detail" @click="tovideo(item)">
       <div class="itemimg">
-        <img v-if="item.img" :src="item.img" class="detailimg" />
+        <img v-if="item.img" :src="item.img" class="detailimg"  :onerror="changeimg"/>
         <span class="video">
           <img src="~assets/img/bofang.svg" />
           168万
         </span>
         <span class="comment">
-          <img src="~assets/img/comment.svg" />
+          <img src="~assets/img/comment.svg"/>
           66万
         </span>
       </div>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       value: [],
+      changeimg: 'this.src="' + require('@/assets/img/tidai.jpg') + '"'
     };
   },
 
@@ -45,7 +46,7 @@ export default {
   methods: {
     tovideo(val){
       this.$router.push('/video/' + val.id)
-    }
+    },
   },
 };
 </script>
