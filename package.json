@@ -11,8 +11,11 @@
         "axios": "^0.21.1",
         "babel-plugin-import": "^1.13.3",
         "core-js": "^3.6.5",
+        "fastclick": "^1.0.6",
         "less": "^4.1.0",
         "less-loader": "^7.3.0",
+        "lib-flexible": "^0.3.2",
+        "px2rem-loader": "^0.1.9",
         "vant": "^2.12.5",
         "vue": "^2.6.11",
         "vue-router": "^3.2.0"

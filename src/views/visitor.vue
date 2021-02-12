@@ -107,9 +107,9 @@ export default {
     change() {
       this.showid = !this.showid;
       if (this.showid) {
-        this.$refs.userdetail.style.height = "170px";
+        this.$refs.userdetail.style.height = "160px";
       } else {
-        this.$refs.userdetail.style.height = "205px";
+        this.$refs.userdetail.style.height = "200px";
       }
     },
     async addcom() {
@@ -232,7 +232,7 @@ export default {
 }
 .zhangkai {
   overflow: hidden;
-  height: 170px;
+  height: 160px;
 }
 .iid {
   background-color: #f1f1f1;
